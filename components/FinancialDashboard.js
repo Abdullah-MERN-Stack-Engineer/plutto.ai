@@ -53,56 +53,55 @@ const FinancialDashboard = () => {
   );
 
   // Gauge Chart Component
-const GaugeChart = ({
-  ticks = 37,            // total tick marks
-  radius = 70,           // radius of the gauge
-  progress = 0.5,        // progress ratio [0–1]
-  centerX = 100,
-  centerY = 100,
-  activeColor = "#3b82f6",   // Tailwind blue-500
-  inactiveColor = "#e5e7eb", // Tailwind gray-200
-}) => {
-  // Arc covers 90° → 270° (open side down)
-  const angleStep = 180 / (ticks - 1);
-  const activeThreshold = 90 + 180 * progress;
-
-  return (
-    <div className="flex justify-center mt-4">
-      <div className="relative w-56 h-28">
-        <svg className="w-56 h-56" viewBox="0 0 200 200">
-          {Array.from({ length: ticks }, (_, i) => {
-            const angle = 90 + angleStep * i; // start at 90°, sweep to 270°
-            const isMajorTick = i % 5 === 0;
-
-            const innerRadius = isMajorTick ? radius - 12 : radius - 7;
-            const outerRadius = radius;
-            const rad = (angle * Math.PI) / 180;
-
-            const x1 = centerX + innerRadius * Math.cos(rad);
-            const y1 = centerY + innerRadius * Math.sin(rad);
-            const x2 = centerX + outerRadius * Math.cos(rad);
-            const y2 = centerY + outerRadius * Math.sin(rad);
-
-            const strokeColor = angle <= activeThreshold ? activeColor : inactiveColor;
-
-            return (
-              <line
-                key={i}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke={strokeColor}
-                strokeWidth={isMajorTick ? 2 : 1}
-                strokeLinecap="round"
-              />
-            );
-          })}
-        </svg>
+  const GaugeChart = () => {
+    const ticks = 21;
+    const progress = 0.6;
+    
+    return (
+      <div className="flex justify-center mt-4">
+        <div className="relative w-48 h-24">
+          <svg className="w-48 h-48" viewBox="0 0 200 100">
+            {/* Background arc */}
+            <path 
+              d="M 20 80 A 80 80 0 0 1 180 80" 
+              stroke="#e5e7eb" 
+              strokeWidth="2" 
+              fill="none" 
+            />
+            
+            {/* Tick marks */}
+            {Array.from({ length: ticks }, (_, i) => {
+              const angle = (i * 180) / (ticks - 1); // 0° to 180°
+              const isMajorTick = i % 5 === 0;
+              const isActive = i <= progress * (ticks - 1);
+              
+              const outerRadius = 80;
+              const innerRadius = isMajorTick ? 70 : 75;
+              const rad = (angle * Math.PI) / 180;
+              
+              const x1 = 100 + innerRadius * Math.cos(Math.PI - rad);
+              const y1 = 80 - innerRadius * Math.sin(Math.PI - rad);
+              const x2 = 100 + outerRadius * Math.cos(Math.PI - rad);
+              const y2 = 80 - outerRadius * Math.sin(Math.PI - rad);
+              
+              return (
+                <line
+                  key={i}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke={isActive ? "#3b82f6" : "#e5e7eb"}
+                  strokeWidth={isMajorTick ? "2" : "1"}
+                  strokeLinecap="round"
+                />
+              );
+            })}
+          </svg>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 
 
@@ -161,54 +160,54 @@ const GaugeChart = ({
 };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-8 relative z-50">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 relative z-50">
       {/* Header Text */}
-      <h2 className="text-white text-5xl font-light w-4xl text-center mb-16">
+      <h2 className="text-white text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-center mb-6 sm:mb-8 lg:mb-12 xl:mb-16 px-2 sm:px-4">
         Streamline Finances With Smart Features
       </h2>
       
       {/* Dashboard Grid */}
-      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="max-w-7xl w-full grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 px-2 sm:px-4">
         {/* Real-Time Analytics */}
-        <div className="bg-white rounded-3xl p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Real-Time Analytics</h3>
-          <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+        <div className="bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6">
+          <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mb-1.5 sm:mb-2">Real-Time Analytics</h3>
+          <p className="text-[10px] xs:text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 lg:mb-6 leading-relaxed">
             Monitor your finances live with clear, intuitive dashboards.
           </p>
           <DonutChart />
         </div>
 
         {/* Automated Reports */}
-        <div className="bg-white rounded-3xl p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Automated Reports</h3>
-          <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+        <div className="bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6">
+          <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mb-1.5 sm:mb-2">Automated Reports</h3>
+          <p className="text-[10px] xs:text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 lg:mb-4 leading-relaxed">
             Generate summaries instantly-no manual work needed.
           </p>
           <LineChart />
         </div>
 
         {/* Smart Budgeting */}
-        <div className="bg-white rounded-3xl p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Smart Budgeting</h3>
-          <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+        <div className="bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6">
+          <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mb-1.5 sm:mb-2">Smart Budgeting</h3>
+          <p className="text-[10px] xs:text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 lg:mb-6 leading-relaxed">
             Plan and adjust with AI-powered budget suggestions.
           </p>
           <PieChart />
         </div>
 
         {/* Secure syncing */}
-        <div className="bg-white rounded-3xl p-6 md:col-span-2">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Secure syncing</h3>
-          <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+        <div className="bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 xs:col-span-2 lg:col-span-2">
+          <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mb-1.5 sm:mb-2">Secure syncing</h3>
+          <p className="text-[10px] xs:text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 lg:mb-4 leading-relaxed">
             Monitor your finances live with dashboards.
           </p>
           <GaugeChart />
         </div>
 
         {/* Growth Score */}
-        <div className="bg-white rounded-3xl p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Growth Score</h3>
-          <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+        <div className="bg-white rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6">
+          <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-gray-900 mb-1.5 sm:mb-2">Growth Score</h3>
+          <p className="text-[10px] xs:text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 lg:mb-6 leading-relaxed">
             Generate summaries instantly.
           </p>
           <ArcChart />
