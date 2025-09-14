@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 import LoadingScreen from "../components/LoadingScreen";
 import LandingPage from "../components/LandingPage";
 import SecondPage from "../components/SecondPage";
+import PalletRossSection from "../components/PalletRossSection";
+import CreativePage from "../components/CreativePage";
+import TestimonialPage from "../components/TestimonialPage";
+import FinancialDashboard from "../components/FinancialDashboard";
 
 import Header from "../components/Header";
 
@@ -51,6 +55,11 @@ export default function Home() {
       )}
       <LandingPage showContent={showContent} />
       {showContent && <SecondPage />}
+      {showContent && <PalletRossSection />}
+      {showContent && <CreativePage />}
+      {showContent && <TestimonialPage />}
+      {showContent && <FinancialDashboard />}
+      
       <LoadingScreen count={count} isVisible={!showLanding} showNumber={showNumber} />
     </>
   );

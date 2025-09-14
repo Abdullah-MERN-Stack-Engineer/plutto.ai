@@ -4,8 +4,8 @@ import { useRef } from "react";
 import ProjectCard from "./ProjectCard";
 
 const SecondPage = () => {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 0.5], ["100vh", "0vh"]);
+  // const { scrollYProgress } = useScroll();
+  // const y = useTransform(scrollYProgress, [0, 0.5], ["100vh", "0vh"]);
 
   const projectData = {
     title: "Energize Your Ambition, Pulse Your Way",
@@ -14,12 +14,12 @@ const SecondPage = () => {
   };
 
   return (
-    <div className="h-screen relative">
+    <div className="h-screen relative bg-black">
       <motion.div 
-        className="fixed inset-0 bg-black z-20 overflow-hidden"
-        style={{ y }}
+        className="h-full w-full overflow-hidden"
+        // style={{ y }}
       >
-        <div className="px-6 flex items-center justify-center h-full pt-20">
+        <div className="px-6 flex items-center justify-center h-full">
           <div className="w-full max-w-6xl">
             <ProjectCard 
               title={projectData.title}
