@@ -173,9 +173,6 @@ const PalletRossSection = () => {
 };
 
 // Extra value: Adding smooth scroll behavior and performance optimization
-if (typeof window !== 'undefined') {
-  // Smooth scroll behavior
-  document.documentElement.style.scrollBehavior = 'smooth';
-}
+
 
 export default PalletRossSection;

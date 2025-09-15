@@ -7,6 +7,11 @@ import PalletRossSection from "../components/PalletRossSection";
 import CreativePage from "../components/CreativePage";
 import TestimonialPage from "../components/TestimonialPage";
 import FinancialDashboard from "../components/FinancialDashboard";
+import DitherEffectSection from "../components/DitherEffectSection";
+import ScrollingCardsSection from "../components/ScrollingCardsSection";
+import PricingSection from "../components/PricingSection";
+import FAQSection from "../components/FAQSection";
+import ContactSection from "../components/ContactSection";
 
 import Header from "../components/Header";
 
@@ -56,9 +61,18 @@ export default function Home() {
       <LandingPage showContent={showContent} />
       {showContent && <SecondPage />}
       {showContent && <PalletRossSection />}
-      {showContent && <CreativePage />}
-      {showContent && <TestimonialPage />}
+      {showContent && (
+        <div className="relative">
+          <CreativePage />
+          <TestimonialPage />
+        </div>
+      )}
+      
+      {showContent && <ScrollingCardsSection />}
       {showContent && <FinancialDashboard />}
+      {showContent && <PricingSection />}
+      {showContent && <FAQSection />}
+      {showContent && <ContactSection />}
       
       <LoadingScreen count={count} isVisible={!showLanding} showNumber={showNumber} />
     </>
